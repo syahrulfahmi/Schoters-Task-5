@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_news"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/size_16">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_news"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_bookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_news_title"
+        app:srcCompat="@drawable/ic_bookmark_outline" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_news_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="@dimen/font_size_18"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/iv_bookmark"
+        app:layout_constraintStart_toEndOf="@id/iv_news"
+        app:layout_constraintTop_toTopOf="@id/iv_news"
+        tools:text="@tools:sample/lorem/random" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:drawableStart="@drawable/ic_clock"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:textSize="@dimen/font_size_12"
+        app:layout_constraintBottom_toBottomOf="@id/iv_news"
+        app:layout_constraintStart_toEndOf="@id/iv_news"
+        tools:text="@tools:sample/lorem" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_author"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_16"
+        android:drawableStart="@drawable/ic_author"
+        android:drawablePadding="4dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:textSize="@dimen/font_size_12"
+        app:layout_constraintBottom_toBottomOf="@id/iv_news"
+        app:layout_constraintEnd_toEndOf="@id/tv_news_title"
+        app:layout_constraintStart_toEndOf="@id/tv_date"
+        tools:text="@tools:sample/lorem" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

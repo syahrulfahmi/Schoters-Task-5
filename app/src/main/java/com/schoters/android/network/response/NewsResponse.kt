@@ -4,30 +4,31 @@ import com.google.gson.annotations.SerializedName
 
 data class NewsResponse(
     @SerializedName("status")
-    val status: String,
+    val status: String = "",
     @SerializedName("totalResults")
-    val totalResults: Int,
+    val totalResults: Int = 0,
     @SerializedName("articles")
-    val articles: List<Article>
+    val articles: List<News>
 )
 
-data class Article(
+data class News(
     @SerializedName("source")
     val source: Source,
     @SerializedName("author")
-    val author: String,
+    val author: String? = "",
     @SerializedName("title")
-    val title: String,
+    val title: String? = "",
     @SerializedName("description")
-    val description: String,
+    val description: String? = "",
     @SerializedName("url")
-    val url: String,
+    val url: String? = "",
     @SerializedName("urlToImage")
-    val urlToImage: String,
+    val urlToImage: String? = "",
     @SerializedName("publishedAt")
-    val publishedAt: String,
+    val publishedAt: String? = "",
     @SerializedName("content")
-    val content: String
+    val content: String? = "",
+    var isBookmarked: Int? = 0
 )
 
 data class Source(

@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -33,6 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -42,6 +47,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+
+    // COIL
+    implementation "io.coil-kt:coil:$coilVersion"
 
     //Jetpack Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:$navVersion"
@@ -64,6 +72,7 @@ dependencies {
 
     //ROOM
     implementation "androidx.room:room-runtime:$roomVersion"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:$roomVersion"
 
     //Corutines

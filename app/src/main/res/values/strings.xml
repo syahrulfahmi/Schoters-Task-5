@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Schoters Task 5</string>
+    <string name="app_news">News</string>
+    <string name="app_bookmark">Bookmark</string>
+    <string name="app_profile">Profile</string>
+    <string name="app_author">Author</string>
+    <string name="schoters_news_app">Schoters News App</string>
+    <string name="news_from_all_over_the_world">News from all over the world</string>
 </resources>

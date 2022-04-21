@@ -10,9 +10,12 @@ import retrofit2.http.Query
  * request rate limit 100/day, be careful to use this api
  */
 interface NewsDataSource {
-    @GET("everything")
+    @GET("top-headlines")
     fun getNews(
-        @Query("q") q: String,
-        @Query("apiKey") apiKey: String
+        @Query("category") category: String,
+        @Query("apiKey") apiKey: String,
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int,
+        @Query("country") country: String = "id",
     ): Call<NewsResponse>
 }

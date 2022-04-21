@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_splash_screen"
+    app:startDestination="@id/splash_screen">
+
+    <fragment
+        android:id="@+id/splash_screen"
+        android:name="com.schoters.android.ui.fragment.SplashScreenFragment"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/action_splashScreenFragment_to_mainActivity"
+            app:destination="@id/mainActivity"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/splash_screen"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.schoters.android.MainActivity"
+        android:label="MainActivity" />
+</navigation>
