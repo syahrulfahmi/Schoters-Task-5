@@ -1,7 +1,8 @@
 package com.schoters.android.network.datasource
 
+import com.schoters.android.BuildConfig
 import com.schoters.android.network.response.NewsResponse
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,11 +12,9 @@ import retrofit2.http.Query
  */
 interface NewsDataSource {
     @GET("top-headlines")
-    fun getNews(
+    suspend fun getNews(
         @Query("category") category: String,
-        @Query("apiKey") apiKey: String,
-        @Query("page") page: Int,
-        @Query("pageSize") pageSize: Int,
+        @Query("apiKey") apiKey: String = BuildConfig.API_KEY,
         @Query("country") country: String = "id",
-    ): Call<NewsResponse>
+    ): Response<NewsResponse>
 }

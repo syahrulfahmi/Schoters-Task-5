@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/size_12"
                     android:layout_marginTop="@dimen/size_24"
-                    android:text="@string/schoters_news_app"
+                    android:text="@string/app_bookmarked_news"
                     android:textSize="@dimen/font_size_24"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -44,33 +45,33 @@
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bookmarked_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabGravity="start"
-            app:tabIndicatorHeight="2dp"
-            app:tabMode="scrollable"
-            app:tabPadding="0dp" />
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_news"
+            tools:visibility="visible" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_no_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/no_data"
+            android:textSize="@dimen/font_size_18"
+            android:visibility="gone" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </FrameLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

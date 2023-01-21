@@ -14,10 +14,7 @@ interface NewsDao {
     @Update
     fun updateNews(newsEntity: NewsEntity)
 
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    fun insertNews(newsEntity: List<NewsEntity>)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNews(newsEntity: NewsEntity)
+    fun insertNews(newsEntity: List<NewsEntity>)
 
 }

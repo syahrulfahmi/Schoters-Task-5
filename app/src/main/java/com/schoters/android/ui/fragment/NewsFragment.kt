@@ -4,128 +4,85 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.schoters.android.SchotersApplication
+import androidx.navigation.fragment.findNavController
 import com.schoters.android.databinding.FragmentNewsBinding
 import com.schoters.android.db.NewsEntity
-import com.schoters.android.network.response.News
+import com.schoters.android.network.Resource
 import com.schoters.android.network.response.NewsResponse
 import com.schoters.android.ui.adapter.NewsAdapter
-import com.schoters.android.ui.adapter.NewsInterface
-import com.schoters.android.utils.PaginationScrollListener
+import com.schoters.android.utils.isVisible
 import com.schoters.android.viewModel.NewsViewModel
-import com.schoters.android.viewModel.NewsViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
-class NewsFragment : Fragment(), NewsInterface {
+@AndroidEntryPoint
+class NewsFragment : Fragment() {
 
-    private val viewModel: NewsViewModel by viewModels {
-        NewsViewModelFactory(
-            requireActivity().application,
-            (requireActivity().application as SchotersApplication).database.newsDao()
-        )
-    }
+    private val viewModel: NewsViewModel by viewModels()
 
     private var _binding: FragmentNewsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: NewsAdapter
+    private lateinit var newsAdapter: NewsAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNewsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = NewsAdapter()
-        viewModel.category = arguments?.getString(NEWS_CATEGORY) ?: ""
+        newsAdapter = NewsAdapter()
 
         getData()
         setUpRecyclerView()
     }
 
     private fun setUpRecyclerView() {
-        binding.rvNews.adapter = adapter
-        adapter.setUpListener(this)
-        binding.rvNews.addOnScrollListener(object : PaginationScrollListener(binding.rvNews.layoutManager as LinearLayoutManager) {
-            override fun isLastPage(): Boolean = viewModel.isLastPage
+        binding.rvNews.adapter = newsAdapter
+        newsAdapter.setUpListener(object : NewsAdapter.NewsInterface {
+            override fun onNewsClicked(news: NewsEntity) {
+                val newsUrl = news.url.orEmpty()
+                findNavController().navigate(NewsFragmentDirections.actionNewsFragmentToNewsDetailFragment(newsUrl))
+            }
 
-            override fun isLoading(): Boolean = adapter.isLoadingLoadMore
-
-            override fun loadMoreItems() {
-                adapter.isLoadingLoadMore = true
-                viewModel.newsField.page += 1
-                viewModel.getNews()
+            override fun onBookmarkClicked(news: NewsEntity) {
+                news.isBookmarked = if (news.isBookmarked == 1) 0 else 1
+                viewModel.updateBookmark(news)
+                newsAdapter.notifyItemChanged(0)
             }
         })
     }
 
     private fun getData() {
-        viewModel.getNews()
         viewModel.newsResponse.observe(viewLifecycleOwner) {
-            it?.let {
-                viewModel.newsField.total = it.totalResults
-                onSuccessGetData(it)
-            } ?: run {
-
+            when (it) {
+                is Resource.Success -> {
+                    val data = it.data
+                    data?.let { onSuccessGetData(data) }
+                    binding.contentLoadingBar.isVisible(false)
+                }
+                is Resource.Loading -> {
+                    binding.contentLoadingBar.isVisible(true)
+                }
+                is Resource.Error -> {
+                    Toast.makeText(binding.root.context, it.message, Toast.LENGTH_SHORT).show()
+                    binding.contentLoadingBar.isVisible(false)
+                }
             }
         }
+
     }
 
     private fun onSuccessGetData(resp: NewsResponse) {
-        val data = ArrayList<NewsEntity>()
-        resp.articles.forEachIndexed { index, item ->
-            data.add(
-                NewsEntity(
-                    id = index,
-                    author = item.author,
-                    title = item.title,
-                    description = item.description,
-                    url = item.url,
-                    urlToImage = item.urlToImage,
-                    publishedAt = item.publishedAt,
-                    isBookmarked = item.isBookmarked
-                )
-            )
-        }
-        if (data.size < viewModel.newsField.perPage) {
-            adapter.isLoadingLoadMore = false
-            viewModel.isLastPage = true
-        }
-        adapter.isLoadingLoadMore = false
-        adapter.addItem(data)
+        newsAdapter.addItem(ArrayList(resp.articles))
     }
 
-    companion object {
-        private const val NEWS_CATEGORY = "news_category"
-        fun newInstance(category: String): NewsFragment {
-            val fragment = NewsFragment()
-            val bundle = Bundle().apply {
-                putString(NEWS_CATEGORY, category)
-            }
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-
-    override fun onNewsClicked(news: News) {
-        val isBookmark = if (news.isBookmarked == 1) 0 else 1
-        val newsEntity = NewsEntity(
-            id = (0..99).random(),
-            author = news.author,
-            title = news.title,
-            description = news.description,
-            urlToImage = news.urlToImage,
-            url = news.url,
-            publishedAt = news.publishedAt,
-            isBookmarked = isBookmark
-        )
-        viewModel.insertNews(newsEntity)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

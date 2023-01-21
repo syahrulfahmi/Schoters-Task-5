@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.ProfileFragment">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="120dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Circle"
+        android:layout_height="120dp"
+        android:layout_marginTop="@dimen/size_24"
+        app:srcCompat="@drawable/ic_my_profile" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_16"
+        android:gravity="center"
+        android:text="@string/user_name"
+        android:textSize="@dimen/font_size_24"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:gravity="center"
+        android:text="@string/github_user_name"
+        android:textSize="@dimen/font_size_18" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

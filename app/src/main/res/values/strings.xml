@@ -6,4 +6,8 @@
     <string name="app_author">Author</string>
     <string name="schoters_news_app">Schoters News App</string>
     <string name="news_from_all_over_the_world">News from all over the world</string>
+    <string name="user_name">Syahrul Fahmi</string>
+    <string name="github_user_name">\@syahrulfahmi</string>
+    <string name="app_bookmarked_news">Bookmarked News</string>
+    <string name="no_data">Tidak Ada Data</string>
 </resources>

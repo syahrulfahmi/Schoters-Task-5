@@ -3,20 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/newsFragment">
+    app:startDestination="@id/navigation_news">
 
     <fragment
-        android:id="@+id/newsFragment"
-        android:name="com.schoters.android.ui.fragment.HomeFragment"
+        android:id="@+id/navigation_news"
+        android:name="com.schoters.android.ui.fragment.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news">
         <action
             android:id="@+id/action_newsFragment_to_newsDetailFragment"
-            app:destination="@id/newsDetailFragment" />
+            app:destination="@id/navigation_news_detail" />
     </fragment>
     <fragment
-        android:id="@+id/newsDetailFragment"
+        android:id="@+id/navigation_news_detail"
         android:name="com.schoters.android.ui.fragment.NewsDetailFragment"
         android:label="fragment_news_detail"
-        tools:layout="@layout/fragment_news_detail" />
+        tools:layout="@layout/fragment_news_detail">
+        <argument
+            android:name="newsUrl"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_bookmark"
+        android:name="com.schoters.android.ui.fragment.BookmarkFragment"
+        android:label="fragment_bookmark"
+        tools:layout="@layout/fragment_bookmark">
+        <action
+            android:id="@+id/action_newsBookmark_to_newsDetailFragment"
+            app:destination="@id/navigation_news_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.schoters.android.ui.fragment.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile">
+
+    </fragment>
 </navigation>
